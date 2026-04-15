@@ -1,0 +1,55 @@
+/* ArticleAuthor.css */
+.aa-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: #f7f7f5;
+  border: 1px solid #e8e8e4;
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin-bottom: 40px;
+}
+
+.aa-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid #e0e0e0;
+}
+
+.aa-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.aa-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #aaa;
+  margin: 0;
+  text-align: justify;
+}
+
+.aa-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+  text-align: justify;
+}
+
+.aa-bio {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+  margin: 4px 0 0;
+  text-align: justify;
+}

@@ -1,0 +1,162 @@
+/* CommentSection.css */
+.cs-wrap {
+  padding-top: 8px;
+}
+
+.cs-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 24px;
+}
+
+.cs-count {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #999;
+}
+
+/* Compose box */
+.cs-compose {
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 32px;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+.cs-compose:focus-within {
+  border-color: #2563a8;
+}
+
+.cs-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 14px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #222;
+  background: transparent;
+  box-sizing: border-box;
+  line-height: 1.6;
+}
+
+.cs-input::placeholder {
+  color: #bbb;
+}
+
+.cs-compose-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 12px 10px;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.cs-submit {
+  background: #1b3f6b;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+
+.cs-submit:hover {
+  background: #2563a8;
+}
+
+/* Comment list */
+.cs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cs-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.cs-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.cs-content {
+  flex: 1;
+}
+
+.cs-top {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.cs-author {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+}
+
+.cs-time {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.cs-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.65;
+  margin: 0 0 8px;
+  text-align: justify;
+}
+
+.cs-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.cs-like,
+.cs-reply {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #888;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.cs-like:hover { color: #2563a8; }
+.cs-like--active { color: #2563a8; }
+
+.cs-reply:hover { color: #333; }

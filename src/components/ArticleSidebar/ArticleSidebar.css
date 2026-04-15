@@ -1,0 +1,122 @@
+/* ArticleSidebar.css */
+.sb-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.sb-section {}
+
+.sb-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #111;
+  margin: 0 0 18px;
+  padding-bottom: 10px;
+  border-bottom: 1.5px solid #eee;
+}
+
+.sb-heading-bar {
+  width: 18px;
+  height: 3px;
+  background: #e8232a;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Related articles */
+.sb-related-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sb-related-item {
+  display: flex;
+  gap: 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 4px;
+  transition: background 0.15s;
+}
+
+.sb-related-item:hover {
+  background: #f5f5f0;
+}
+
+.sb-related-img {
+  width: 80px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 5px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.sb-related-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+
+.sb-related-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #111;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sb-related-meta {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #aaa;
+  margin: 0;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.sb-related-cat {
+  color: #2563a8;
+  font-weight: 500;
+}
+
+/* Tags */
+.sb-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sb-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #444;
+  background: #f0f0ec;
+  border: 1px solid #e0e0da;
+  padding: 5px 12px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sb-tag:hover {
+  background: #ebf3fb;
+  border-color: #bdd6f0;
+  color: #2563a8;
+}
