@@ -1,0 +1,133 @@
+.navbar {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navbar__logo {
+  font-family: "Playfair Display", "Georgia", serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: -0.02em;
+}
+.navbar__logo span {
+  color: #c0392b;
+}
+
+.navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.navbar__link {
+  font-family: "Source Sans 3", "Helvetica Neue", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #444;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+.navbar__link:hover {
+  background: #f5f5f5;
+  color: #1a1a1a;
+}
+.navbar__link--active {
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.navbar__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 6px 14px;
+  color: #888;
+}
+.navbar__search input {
+  border: none;
+  background: transparent;
+  font-size: 0.8rem;
+  color: #444;
+  outline: none;
+  width: 120px;
+}
+.navbar__search input::placeholder { color: #aaa; }
+
+.navbar__icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.navbar__icon-btn:hover { background: #f0f0f0; }
+
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.navbar__hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #333;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .navbar__nav {
+    display: none;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    flex-direction: column;
+    padding: 16px;
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .navbar__nav.open { display: flex; }
+  .navbar__search { display: none; }
+  .navbar__hamburger { display: flex; }
+}
