@@ -1,8 +1,13 @@
 import { RouterProvider } from "react-router-dom";
+import { ChangePasswordProvider } from "./contexts/ChangePasswordContext";
 import { router } from "./routes";
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ChangePasswordProvider>
+      <RouterProvider router={router} />
+    </ChangePasswordProvider>
+  );
 }
 
 export default App;

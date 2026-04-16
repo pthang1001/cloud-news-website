@@ -1,5 +1,8 @@
 import { useState } from "react";
 import "./ProfilePage.css";
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
+import { useChangePassword } from "../../contexts/ChangePasswordContext";
 
 // --- Mock Data ---
 const savedArticles = [
@@ -69,7 +72,8 @@ function Toggle({ enabled, onChange }) {
   );
 }
 
-function AccountInfoPanel() {
+function AccountInfoPanel({ isEditMode }) {
+  const { openChangePassword } = useChangePassword();
   const [form, setForm] = useState({
     name: "Nguyễn Minh Tuấn",
     email: "tuan.nguyen@example.com",
@@ -86,6 +90,7 @@ function AccountInfoPanel() {
             className="profile-field__input"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
+            disabled={!isEditMode}
           />
         </div>
         <div className="profile-field">
@@ -94,6 +99,7 @@ function AccountInfoPanel() {
             className="profile-field__input"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
+            disabled={!isEditMode}
           />
         </div>
         <div className="profile-field">
@@ -102,6 +108,7 @@ function AccountInfoPanel() {
             className="profile-field__input profile-field__textarea"
             value={form.bio}
             onChange={(e) => setForm({ ...form, bio: e.target.value })}
+            disabled={!isEditMode}
             rows={4}
           />
         </div>
@@ -109,7 +116,11 @@ function AccountInfoPanel() {
 
       <section className="profile-security">
         <h3 className="profile-section-title">Bảo mật</h3>
-        <div className="profile-security-item">
+        <button 
+          className="profile-security-item"
+          onClick={openChangePassword}
+          style={{ background: "none", border: "none", cursor: "pointer", width: "100%", textAlign: "left", padding: "11px 0" }}
+        >
           <span className="profile-security-item__icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
@@ -120,7 +131,7 @@ function AccountInfoPanel() {
           <svg className="profile-security-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M9 18l6-6-6-6"/>
           </svg>
-        </div>
+        </button>
         <div className="profile-security-item">
           <span className="profile-security-item__icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -248,19 +259,53 @@ const TABS = [
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("info");
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [avatar, setAvatar] = useState("https://api.dicebear.com/7.x/avataaars/svg?seed=MinhTuan");
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setAvatar(event.target?.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleEditToggle = () => {
+    setIsEditMode(!isEditMode);
+  };
 
   return (
-    <div className="profile-page">
+    <>
+      <Navbar />
+      <div className="profile-page">
       {/* Profile Header */}
       <div className="profile-header">
         <div className="profile-header__inner">
           <div className="profile-header__identity">
-            <div className="profile-header__avatar-wrap">
+            <div className={`profile-header__avatar-wrap ${isEditMode ? "profile-header__avatar-wrap--editable" : ""}`}>
               <img
-                src="https://api.dicebear.com/7.x/avataaars/svg?seed=MinhTuan"
+                src={avatar}
                 alt="Avatar"
                 className="profile-header__avatar"
               />
+              <div className="profile-header__avatar-overlay">
+                <input
+                  type="file"
+                  id="avatar-input"
+                  accept="image/*"
+                  onChange={handleAvatarChange}
+                  style={{ display: "none" }}
+                />
+                <label htmlFor="avatar-input" className="profile-header__avatar-edit-btn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                  </svg>
+                </label>
+              </div>
             </div>
             <div className="profile-header__meta">
               <h1 className="profile-header__name">Nguyễn Minh Tuấn</h1>
@@ -269,12 +314,12 @@ export default function ProfilePage() {
               </p>
             </div>
           </div>
-          <button className="profile-header__edit-btn">
+          <button className="profile-header__edit-btn" onClick={handleEditToggle}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
             </svg>
-            Chỉnh sửa hồ sơ
+            {isEditMode ? "Lưu chỉnh sửa" : "Chỉnh sửa hồ sơ"}
           </button>
         </div>
       </div>
@@ -298,7 +343,7 @@ export default function ProfilePage() {
       <div className="profile-content">
         {activeTab === "info" && (
           <div className="profile-layout">
-            <AccountInfoPanel />
+            <AccountInfoPanel isEditMode={isEditMode} />
             <div className="profile-right-panel">
               <SavedArticlesPanel />
               <NotificationsPanel />
@@ -316,6 +361,8 @@ export default function ProfilePage() {
           </div>
         )}
       </div>
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }

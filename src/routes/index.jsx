@@ -14,6 +14,5 @@ export const router = createBrowserRouter([
   { path: "/profile",    element: <ProfilePage /> },
   { path: "/admin/*",    element: <AdminRouter /> },
   { path: "/search",     element: <Home /> },
-  // Category routes redirect to home (if backend supports filtering by category)
   { path: "/:category", element: <Home /> }
 ]);

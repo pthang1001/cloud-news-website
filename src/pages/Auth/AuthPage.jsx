@@ -19,81 +19,87 @@ export default function AuthPage({ mode = "login" }) {
       <div style={{
         flex: isMobile ? "0 0 auto" : "0 0 50%",
         minHeight: isMobile ? "40vh" : "100vh",
-        background: "linear-gradient(160deg, #0a1628 0%, #0d2657 60%, #1a3a7a 100%)",
+        background: "#ffffff",
         position: "relative",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
         padding: "32px 48px",
-        color: "#fff",
+        color: "#1a1a1a",
+        borderRight: "1px solid #e2e8f0",
       }}>
         {/* Grid pattern overlay */}
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+            linear-gradient(rgba(15,23,42,0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(15,23,42,0.02) 1px, transparent 1px)
           `,
           backgroundSize: "40px 40px",
         }} />
 
         {/* Glow blob */}
         <div style={{
-          position: "absolute", bottom: "10%", left: "5%",
-          width: 350, height: 350,
-          background: "radial-gradient(circle, rgba(30,100,255,0.25) 0%, transparent 70%)",
+          position: "absolute", bottom: "10%", left: "50%",
+          transform: "translateX(-50%)",
+          width: 300, height: 300,
+          background: "radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%)",
           borderRadius: "50%",
           filter: "blur(40px)",
         }} />
 
         {/* Logo */}
-        <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{
-            width: 32, height: 32, borderRadius: 8,
-            background: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 14, fontWeight: 800, color: "#fff",
-          }}>D</div>
-          <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: "-0.3px" }}>Diễn Đàn Press</span>
+        <div style={{ position: "absolute", top: 32, left: 48, zIndex: 1, display: "flex", alignItems: "center", gap: 12 }}>
+          <a href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
+            <img src="/Dien_dan_logo.png" alt="Diễn Đàn Press" style={{ height: 40, width: "auto", objectFit: "contain" }} />
+          </a>
         </div>
 
-        {/* Nav */}
-        <nav style={{ position: "relative", zIndex: 1, display: "flex", gap: 28, marginTop: 16, fontSize: 14, color: "rgba(255,255,255,0.7)" }}>
-          {["Thời sự", "Thể thao", "Công nghệ", "Kinh doanh", "Giải trí"].map(item => (
-            <a key={item} href="#" style={{ color: "inherit", textDecoration: "none" }}>{item}</a>
-          ))}
-        </nav>
-
-        {/* Tagline */}
-        <div style={{ position: "relative", zIndex: 1, marginTop: "auto", paddingBottom: 40 }}>
+        {/* Tagline - Centered */}
+        <div style={{ 
+          position: "relative", 
+          zIndex: 1, 
+          textAlign: "center",
+          maxWidth: 600,
+        }}>
           <div style={{
             fontSize: 13, letterSpacing: 3, textTransform: "uppercase",
-            color: "rgba(255,255,255,0.4)", marginBottom: 20, fontWeight: 500,
+            color: "#94a3b8", marginBottom: 28, fontWeight: 600,
           }}>Editorial News</div>
+          
           <h1 style={{
-            fontSize: "clamp(28px, 3vw, 44px)", fontWeight: 800, lineHeight: 1.2,
-            margin: "0 0 20px", letterSpacing: "-0.5px",
+            fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 800, lineHeight: 1.5,
+            margin: "0 0 24px", letterSpacing: "-0.8px", color: "#0f172a",
           }}>
             Trí tuệ biên tập,<br />
-            <span style={{ color: "#60a5fa" }}>Tầm nhìn thời đại.</span>
+            <span style={{ color: "#2563eb" }}>Tầm nhìn thời đại.</span>
           </h1>
-          <p style={{ fontSize: 15, color: "rgba(255,255,255,0.65)", lineHeight: 1.7, maxWidth: 380, margin: "0 0 36px" }}>
-            Tham gia cộng đồng Diễn Đàn Press để cập nhật những phân tích sâu sắc và thông tin uy tín từ các chuyên gia hàng đầu.
+          
+          <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.8, margin: "0 0 44px", fontWeight: 500 }}>
+            Tham gia cộng đồng Diễn Đàn Press để cập nhật<br />
+            những phân tích sâu sắc và thông tin uy tín<br />
+            từ các chuyên gia hàng đầu.
           </p>
 
           {/* Stats */}
-          <div style={{ display: "flex", gap: 20 }}>
+          <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
             {[
               { val: "500k+", label: "ĐỘC GIẢ TIN DÙNG" },
               { val: "24/7", label: "TIN TỨC ĐA CHIỀU" },
             ].map(({ val, label }) => (
               <div key={label} style={{
-                background: "rgba(255,255,255,0.07)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                borderRadius: 14, padding: "16px 24px", backdropFilter: "blur(10px)",
+                background: "#f8fafc",
+                border: "1.5px solid #e2e8f0",
+                borderRadius: 16, 
+                padding: "24px 32px",
+                backdropFilter: "blur(10px)",
+                flex: "1",
+                minWidth: 140,
               }}>
-                <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-0.5px" }}>{val}</div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", letterSpacing: 1.5, marginTop: 4 }}>{label}</div>
+                <div style={{ fontSize: 32, fontWeight: 800, letterSpacing: "-0.5px", color: "#0f172a", marginBottom: 8 }}>{val}</div>
+                <div style={{ fontSize: 11, color: "#94a3b8", letterSpacing: 1.2, fontWeight: 600, textTransform: "uppercase" }}>{label}</div>
               </div>
             ))}
           </div>
@@ -104,7 +110,7 @@ export default function AuthPage({ mode = "login" }) {
       <div style={{
         flex: 1,
         minHeight: isMobile ? "60vh" : "100vh",
-        background: "#f8fafc",
+        background: "#ffffff",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

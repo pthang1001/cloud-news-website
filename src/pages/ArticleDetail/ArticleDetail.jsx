@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./ArticleDetail.css";
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 import ArticleSidebar from "../../components/ArticleSidebar/ArticleSidebar";
 import CommentSection from "../../components/CommentSection/CommentSection";
 import ArticleAuthor from "../../components/ArticleAuthor/ArticleAuthor";
@@ -114,10 +116,12 @@ export default function ArticleDetail() {
   if (!article) return <div className="ad-loading">Không tìm thấy bài viết.</div>;
 
   return (
-    <div className="ad-page">
-      <div className="ad-container">
-        {/* ── CỘT TRÁI: nội dung chính ── */}
-        <main className="ad-main">
+    <>
+      <Navbar />
+      <div className="ad-page">
+        <div className="ad-container">
+          {/* ── CỘT TRÁI: nội dung chính ── */}
+          <main className="ad-main">
           {/* Meta */}
           <div className="ad-meta">
             <span className="ad-category">{article.category}</span>
@@ -199,6 +203,8 @@ export default function ArticleDetail() {
           <ArticleSidebar relatedArticles={article.relatedArticles} tags={article.tags} />
         </aside>
       </div>
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }
