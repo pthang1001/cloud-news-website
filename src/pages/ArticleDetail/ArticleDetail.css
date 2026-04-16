@@ -120,6 +120,30 @@
   transform: scale(1.08);
 }
 
+.ad-share-btn--saved {
+  border-color: #16a34a;
+  color: #16a34a;
+  background: #dcfce7;
+  animation: pulse-green 0.6s ease;
+}
+
+.ad-share-btn--saved:hover {
+  border-color: #15803d;
+  color: #15803d;
+}
+
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+  }
+}
+
 /* Hero image */
 .ad-hero {
   margin: 0 0 28px;
