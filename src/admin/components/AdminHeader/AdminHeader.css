@@ -1,0 +1,127 @@
+.admin-header {
+  height: var(--admin-header-height);
+  background: var(--admin-navy-mid);
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  gap: 20px;
+  position: fixed;
+  top: 0;
+  left: 220px;
+  right: 0;
+  z-index: 50;
+}
+
+.header-left {
+  flex-shrink: 0;
+}
+
+.header-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.header-logo:hover {
+  opacity: 0.8;
+}
+
+.header-center {
+  flex: 1;
+  max-width: 420px;
+}
+
+.header-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--admin-navy-light);
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  transition: border-color var(--admin-transition);
+}
+
+.header-search:focus-within {
+  border-color: rgba(37, 99, 235, 0.5);
+}
+
+.header-search svg {
+  width: 16px;
+  height: 16px;
+  color: var(--admin-text-dim);
+  flex-shrink: 0;
+}
+
+.header-search input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--admin-text);
+  font-size: 13.5px;
+  font-family: var(--font-sans);
+  width: 100%;
+}
+
+.header-search input::placeholder {
+  color: var(--admin-text-dim);
+}
+
+.header-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-action-btn,
+.header-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--admin-text-muted);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  transition: all var(--admin-transition);
+}
+
+.header-action-btn:hover,
+.header-logout-btn:hover {
+  background: rgba(0,0,0,0.06);
+  color: var(--admin-text);
+}
+
+.header-action-btn:active,
+.header-logout-btn:active {
+  background: rgba(0,0,0,0.12);
+}
+
+.header-action-btn svg,
+.header-logout-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.header-logout-btn {
+  color: #ef4444;
+}
+
+.header-logout-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+}
+
+.header-logout-btn:active {
+  background: rgba(239, 68, 68, 0.15);
+}

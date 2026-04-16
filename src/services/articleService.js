@@ -2,6 +2,20 @@
 import api from "./api";
 
 /**
+ * Lấy danh sách tất cả bài viết
+ * @param {number} page
+ * @param {number} limit
+ * @param {string} sort
+ * @returns {Promise<Array>}
+ */
+export const getAllArticles = async (page = 1, limit = 100, sort = "-created_at") => {
+  const res = await api.get("/articles", {
+    params: { page, limit, sort },
+  });
+  return Array.isArray(res.data) ? res.data : res.data.articles || [];
+};
+
+/**
  * Lấy chi tiết bài viết theo ID
  * @param {string|number} id
  * @returns {Promise<Object>}

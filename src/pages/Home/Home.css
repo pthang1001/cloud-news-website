@@ -6,15 +6,18 @@
 
 .home-top {
   display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 0;
-  max-width: 1200px;
+  grid-template-columns: 1fr 360px;
+  gap: 32px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 24px 24px 40px;
+  padding: 48px 32px 40px;
+  align-items: start;
 }
 
 @media (max-width: 900px) {
   .home-top {
     grid-template-columns: 1fr;
+    padding: 32px 24px;
+    gap: 40px;
   }
 }

@@ -23,6 +23,13 @@
   display: block;
   margin-bottom: 10px;
 }
+
+.footer__logo img {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
 .footer__logo span { color: #c0392b; }
 
 .footer__tagline {

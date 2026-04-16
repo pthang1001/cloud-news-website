@@ -1,29 +1,36 @@
 .breaking-news {
-  padding: 0 0 0 28px;
-  border-left: 1px solid #e5e5e5;
-  margin-left: 24px;
+  position: sticky;
+  top: 80px;
+  padding: 0;
+  border: none;
+  margin: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e8e8e8;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
 .breaking-news__header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid #e5e5e5;
+  gap: 12px;
+  padding: 20px 20px;
+  border-bottom: 2px solid #e8e8e8;
+  background: #fafafa;
 }
 
 .breaking-news__bar {
   display: block;
   width: 4px;
-  height: 20px;
-  background: #c0392b;
+  height: 22px;
+  background: linear-gradient(180deg, #c0392b 0%, #a93226 100%);
   border-radius: 2px;
 }
 
 .breaking-news__title {
   font-family: "Playfair Display", "Georgia", serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #1a1a1a;
   margin: 0;
@@ -40,42 +47,63 @@
 }
 
 .breaking-news__item {
-  padding: 18px 0;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f2f2f2;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  transition: all 0.25s ease;
+  background: #ffffff;
 }
+
+.breaking-news__item:hover {
+  background: #f9f9f9;
+  padding-left: 24px;
+}
+
 .breaking-news__item:last-child { border-bottom: none; }
 
 .breaking-news__category {
   font-family: "Source Sans 3", sans-serif;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  width: fit-content;
 }
 
 .breaking-news__item-title {
   font-family: "Merriweather", "Georgia", serif;
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 1.45;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
   color: #1a1a1a;
   text-decoration: none;
-  transition: color 0.15s;
+  transition: color 0.2s;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-.breaking-news__item-title:hover { color: #c0392b; }
+
+.breaking-news__item:hover .breaking-news__item-title { 
+  color: #c0392b;
+  font-weight: 700;
+}
 
 .breaking-news__item-meta {
   font-family: "Source Sans 3", sans-serif;
-  font-size: 0.78rem;
-  color: #888;
+  font-size: 0.75rem;
+  color: #999;
   display: flex;
   align-items: center;
   gap: 6px;
+  font-weight: 500;
 }
-.breaking-news__dot { color: #ccc; }
+.breaking-news__dot { color: #ddd; }
 
 @media (max-width: 900px) {
   .breaking-news {

@@ -24,7 +24,16 @@
   text-decoration: none;
   white-space: nowrap;
   letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
 }
+
+.navbar__logo img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
 .navbar__logo span {
   color: #c0392b;
 }
@@ -71,16 +80,46 @@
   border-radius: 20px;
   padding: 6px 14px;
   color: #888;
+  transition: all 0.3s ease;
+  max-width: 150px;
 }
-.navbar__search input {
+
+.navbar__search.active {
+  max-width: 280px;
+  background: #fff;
+  border-color: #c0392b;
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.15);
+}
+
+.navbar__search-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #888;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.navbar__search-icon:hover {
+  color: #c0392b;
+}
+
+.navbar__search-input {
   border: none;
   background: transparent;
-  font-size: 0.8rem;
-  color: #444;
+  font-size: 0.9rem;
+  color: #333;
   outline: none;
-  width: 120px;
+  width: 100%;
+  font-family: "Source Sans 3", sans-serif;
 }
-.navbar__search input::placeholder { color: #aaa; }
+
+.navbar__search-input::placeholder {
+  color: #aaa;
+}
 
 .navbar__icon-btn {
   background: none;

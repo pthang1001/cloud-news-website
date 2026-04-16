@@ -13,7 +13,7 @@ export default function Footer() {
       <div className="footer__inner">
         <div className="footer__brand">
           <a href="/" className="footer__logo">
-            Diễn Đàn<span>Press</span>
+            <img src="/Dien_dan_logo.png" alt="Diễn Đàn Press" />
           </a>
           <p className="footer__tagline">
             Cung cấp những góc nhìn sâu sắc và tin tức trung thực nhất cho độc giả Việt.
