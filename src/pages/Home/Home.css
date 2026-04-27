@@ -1,3 +1,7 @@
+/* ============================================================
+   home.css — Cập nhật giao diện Tiêu điểm Duy nhé
+   ============================================================ */
+
 .home-page {
   font-family: "Merriweather", "Georgia", serif;
   color: #1a1a1a;
@@ -13,6 +17,41 @@
   padding: 48px 32px 40px;
   align-items: start;
 }
+
+/* ---------- PHẦN FIX THEO YÊU CẦU CỦA DUY ---------- */
+
+/* 1. Bỏ gạch chân cho toàn bộ link trong phần tiêu điểm */
+.featured-card-wrapper, 
+.featured-small-card-wrapper,
+.featured-news a {
+  text-decoration: none !important;
+}
+
+/* 2. Chữ TIÊU ĐIỂM hiện màu đỏ và KHÔNG gạch chân */
+.featured-news__label-text {
+  color: #dc2626 !important; /* Màu đỏ đậm chuẩn Duy nhé */
+  font-weight: 700;
+  text-decoration: none !important;
+  border-bottom: none !important; /* Xóa nếu nó là border */
+}
+
+/* 3. Bỏ gạch chân cho tiêu đề chính và tiêu đề trắng dưới ảnh */
+.featured-news__title,
+.featured-card__title,
+.featured-small-card__title {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+/* 4. Xóa chữ "vừa cập nhật" Duy nhé */
+/* Mình sẽ ẩn các thành phần hiển thị thời gian cập nhật trong card */
+.featured-card__update-time, 
+.featured-small-card__update,
+.featured-news__time {
+  display: none !important;
+}
+
+/* -------------------------------------------------- */
 
 @media (max-width: 900px) {
   .home-top {

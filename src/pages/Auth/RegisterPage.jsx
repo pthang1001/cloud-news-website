@@ -13,7 +13,7 @@ export default function RegisterPage() {
           Tạo tài khoản mới
         </h2>
         <p style={{ fontSize: 15, color: "#64748b", margin: 0, lineHeight: 1.5 }}>
-          Tham gia cộng đồng 500k+ độc giả Diễn Đàn Press
+          Tham gia cộng đồng độc giả Diễn Đàn Press
         </p>
       </div>
 

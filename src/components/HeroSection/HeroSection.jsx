@@ -1,37 +1,79 @@
-import heroImg from "../../assets/hero.png";
+import { Link } from "react-router-dom";
+import { useSavedArticles } from "../../contexts/SavedArticlesContext"; // Duy nhớ check lại đường dẫn file Context nhé
 import "./HeroSection.css";
 
-const HERO_ARTICLE = {
-  category: "TIÊU ĐIỂM",
-  timeAgo: "10 phút trước",
-  title: "Tầm nhìn mới cho phát triển hạ tầng số tại Việt Nam trong thập kỷ 2030",
-  excerpt:
-    "Các chuyên gia nhận định việc đầu tư vào hệ sinh thái dữ liệu và kết nối thông minh sẽ là chìa khóa để thúc đẩy tăng trưởng GDP quốc gia.",
-  author: {
-    name: "Lê Hoàng Nam",
-    avatar: "https://i.pravatar.cc/32?img=12",
-  },
-  image: heroImg,
-};
+export default function HeroSection({ featuredArticle, loading }) {
+  // Lấy các hàm từ Context để làm việc trực tiếp với DB
+  const { savedArticleIds, addSavedArticleId, removeSavedArticleId } = useSavedArticles();
 
-export default function HeroSection() {
+  if (loading || !featuredArticle) {
+    return <div className="hero-loading">Đang tải tiêu điểm bạn chờ xíu...</div>;
+  }
+
+  // Kiểm tra trạng thái đã lưu từ Context Duy nhé
+  const isSaved = savedArticleIds.includes(String(featuredArticle.id));
+
+  // Hàm xử lý riêng cho nút Lưu Duy nhé
+  const handleSaveClick = (e) => {
+    e.preventDefault(); 
+    e.stopPropagation();
+    
+    if (isSaved) {
+      removeSavedArticleId(featuredArticle.id);
+    } else {
+      // QUAN TRỌNG: Truyền cả object featuredArticle để Postgres có data lưu
+      addSavedArticleId(featuredArticle);
+    }
+  };
+
   return (
     <article className="hero-section">
-      <div className="hero__image-wrap">
-        <img src={HERO_ARTICLE.image} alt={HERO_ARTICLE.title} className="hero__image" />
-      </div>
-      <div className="hero__content">
-        <div className="hero__meta">
-          <span className="hero__badge">{HERO_ARTICLE.category}</span>
-          <span className="hero__time">{HERO_ARTICLE.timeAgo}</span>
+      <Link to={`/article/${featuredArticle.id}`} className="hero__link" style={{ textDecoration: 'none' }}>
+        <div className="hero__image-wrap">
+          <img src={featuredArticle.image} alt={featuredArticle.title} className="hero__image" />
         </div>
-        <h1 className="hero__title">{HERO_ARTICLE.title}</h1>
-        <p className="hero__excerpt">{HERO_ARTICLE.excerpt}</p>
-        <div className="hero__author">
-          <img src={HERO_ARTICLE.author.avatar} alt={HERO_ARTICLE.author.name} className="hero__avatar" />
-          <span className="hero__author-name">{HERO_ARTICLE.author.name}</span>
+        <div className="hero__content">
+          <div className="hero__meta" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            
+            {/* Icon Lưu bài nằm bên góc trái Duy nhé */}
+            <button 
+              onClick={handleSaveClick}
+              className="hero__save-btn"
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: isSaved ? '#00e5ff' : '#fff', // Màu xanh Cyan khi đã lưu
+                display: 'flex',
+                alignItems: 'center',
+                padding: 0,
+                zIndex: 10
+              }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill={isSaved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2.5">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+              </svg>
+            </button>
+
+            <span className="hero__badge" style={{ color: '#ff4d4d', fontWeight: '800', textDecoration: 'none', border: 'none' }}>
+              TIÊU ĐIỂM
+            </span>
+          </div>
+
+          <h1 className="hero__title" style={{ textDecoration: 'none', marginBottom: '15px' }}>
+            {featuredArticle.title}
+          </h1>
+
+          <div className="hero__author">
+            <img 
+              src="/VnExpress-logo-1.png" 
+              alt="VnExpress" 
+              className="hero__vnexpress-logo" 
+              style={{ height: '24px', width: 'auto', objectFit: 'contain' }}
+            />
+          </div>
         </div>
-      </div>
+      </Link>
     </article>
   );
 }

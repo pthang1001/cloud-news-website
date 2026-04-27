@@ -6,6 +6,8 @@ import ArticlesPage from "./pages/ArticlesPage/ArticlesPage";
 import CategoriesPage from "./pages/CategoriesPage/CategoriesPage";
 import CommentsPage from "./pages/CommentsPage/CommentsPage";
 import UsersPage from "./pages/UsersPage/UsersPage";
+// Import trang quản lý tố cáo Duy vừa tạo nè
+import ContentManagePage from "./pages/UsersPage/ContentManagePage"; 
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import { useCurrentAdminPage } from "./hooks/useCurrentAdminPage";
 
@@ -25,6 +27,8 @@ const AdminRouter = () => {
         <Route path="/categories" element={<CategoriesPage />} />
         <Route path="/comments" element={<CommentsPage />} />
         <Route path="/users" element={<UsersPage />} />
+        {/* Đăng ký Route cho Quản lý nội dung Duy nhé */}
+        <Route path="/content" element={<ContentManagePage />} />
         <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </AdminLayout>

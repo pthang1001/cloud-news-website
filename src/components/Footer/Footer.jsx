@@ -28,7 +28,7 @@ export default function Footer() {
         </nav>
       </div>
       <div className="footer__bottom">
-        <span>© 2024 Diễn Đàn Press. Editorial Precision System.</span>
+        <span>© 2026 Diễn Đàn Press. Editorial Precision System.</span>
       </div>
     </footer>
   );

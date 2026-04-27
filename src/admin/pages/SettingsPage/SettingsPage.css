@@ -1,953 +1,119 @@
-/* ===========================
-   SettingsPage.css
-   =========================== */
+/* ============================================================
+   SettingsPage.css — Minimal & Dark Mode Ready
+   ============================================================ */
 
 .settings-page {
-  padding: 36px 40px 80px;
+  padding: 60px 20px;
   max-width: 860px;
-  font-family: 'DM Sans', 'Arial', sans-serif;
-  color: #1a1a2e;
-  background: linear-gradient(135deg, #f5f6fa 0%, #ebeef4 100%);
-  margin-top: 40px;
+  margin: 0 auto;
   min-height: 100vh;
+  /* Sử dụng biến màu hệ thống Duy nhé */
+  background-color: var(--bg); 
+  color: var(--text);
+  transition: all 0.3s ease;
 }
 
 /* ---- Page Header ---- */
 .settings-header {
   margin-bottom: 40px;
+  text-align: center;
 }
 
 .settings-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
+  font-family: var(--heading);
+  font-size: 2.2rem;
   font-weight: 700;
-  color: #1a1a2e;
-  margin: 0 0 10px;
-  letter-spacing: -0.3px;
+  color: var(--text-h);
+  margin: 0 0 12px;
 }
 
 .settings-subtitle {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  color: #555;
-  line-height: 1.6;
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--text);
+  opacity: 0.8;
+  max-width: 500px;
   margin: 0 auto;
-  font-weight: 400;
-  text-align: center;
 }
 
-/* ===========================
-   SECTIONS
-   =========================== */
+/* ---- Section & Card ---- */
 .settings-section {
-  margin-bottom: 60px;
-}
-
-/* ---- Section: Thông tin Website ---- */
-.section-intro {
-  margin-bottom: 20px;
-}
-
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #cc2929;
-  margin: 0 0 8px;
-  letter-spacing: -0.2px;
-}
-
-.section-desc {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.88rem;
-  color: #666;
-  line-height: 1.55;
-  font-weight: 400;
-  text-align: left;
-}
-
-/* ---- Card ---- */
-.section-card {
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.04);
-  border-radius: 14px;
-  padding: 28px 32px;
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.section-card:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-  border-color: rgba(26, 60, 110, 0.1);
-}
-
-/* ---- Form Elements ---- */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.form-label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #999;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-.form-input,
-.form-textarea {
-  border: 1.5px solid #e5e8f0;
-  border-radius: 9px;
-  padding: 11px 14px;
-  font-size: 0.92rem;
-  color: #1a1a2e;
-  font-family: 'DM Sans', sans-serif;
-  background: #f8f9fc;
-  transition: all 0.2s ease;
-  outline: none;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.form-input:focus,
-.form-textarea:focus {
-  border-color: #1a3c6e;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.08);
-}
-
-.form-textarea {
-  resize: vertical;
-  min-height: 90px;
-  line-height: 1.5;
-}
-
-/* ===========================
-   SEO SECTION
-   =========================== */
-.seo-section {
-  padding-top: 10px;
-}
-
-.section-title-center {
-  font-family: 'Playfair Display', serif;
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1a1a2e;
-  margin-bottom: 36px;
-  position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
-  letter-spacing: -0.2px;
-}
-
-.title-underline {
-  display: block;
-  width: 50px;
-  height: 3px;
-  background: #cc2929;
-  margin: 8px auto 0;
-  border-radius: 2px;
-}
-
-/* ---- SEO Grid ---- */
-.seo-grid {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 0;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #fff;
-  margin-bottom: 32px;
-}
-
-/* SEO Score Card */
-.seo-score-card {
-  background: #f5f7fa;
-  padding: 28px 24px;
-  border-right: 1px solid #e0e0e0;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.seo-score-label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: #1a3a6b;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  margin: 0;
-}
-
-.seo-score-value {
-  display: flex;
-  align-items: baseline;
-  gap: 2px;
-}
-
-.score-number {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 2.8rem;
-  font-weight: 700;
-  color: #1a1a2e;
-  line-height: 1;
-}
-
-.score-denom {
-  font-size: 1rem;
-  color: #888;
-  font-weight: 500;
-}
-
-.seo-badges {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.seo-badge {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.72rem;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-weight: 600;
-  display: inline-block;
-  width: fit-content;
-}
-
-.seo-badge.active {
-  background: #e6f0ff;
-  color: #1a3a6b;
-}
-
-/* SVG Score ring decoration */
-.seo-score-decoration {
-  position: absolute;
-  right: -20px;
-  bottom: -20px;
-  width: 100px;
-  height: 100px;
-  opacity: 0.08;
-  pointer-events: none;
-}
-
-.score-svg {
-  width: 100%;
-  height: 100%;
-}
-
-.score-bg {
-  fill: none;
-  stroke: #1a3a6b;
-}
-
-.score-fill {
-  fill: none;
-  stroke: #1a3a6b;
-  transition: stroke-dasharray 0.6s ease;
-}
-
-/* Meta Data Card */
-.seo-meta-card {
-  padding: 24px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.meta-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.meta-card-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #1a1a2e;
-  margin: 0;
-  letter-spacing: -0.1px;
-}
-
-.meta-update-btn {
-  font-family: 'DM Sans', sans-serif;
-  background: none;
-  border: none;
-  color: #1a3a6b;
-  font-size: 0.78rem;
-  font-weight: 600;
-  cursor: pointer;
-  letter-spacing: 0.3px;
-  padding: 0;
-  transition: opacity 0.2s;
-}
-
-.meta-update-btn:hover {
-  opacity: 0.7;
-}
-
-.meta-row {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.meta-field-label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: #999;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-}
-
-.keywords-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-
-.keyword-tag {
-  font-family: 'DM Sans', sans-serif;
-  background: #f0f0f0;
-  color: #333;
-  font-size: 0.82rem;
-  padding: 4px 12px;
-  border-radius: 14px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.15s;
-  user-select: none;
-}
-
-.keyword-tag:hover {
-  background: #ffd0d0;
-  color: #a00;
-  text-decoration: line-through;
-}
-
-.keyword-add-btn {
-  font-family: 'DM Sans', sans-serif;
-  background: #cc2929;
-  color: #fff;
-  font-size: 0.8rem;
-  padding: 4px 12px;
-  border-radius: 14px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.2s;
-}
-
-.keyword-add-btn:hover {
-  background: #a01e1e;
-}
-
-.robots-textarea {
-  border: 1px solid #d0d0d0;
-  border-radius: 5px;
-  padding: 8px 12px;
-  font-size: 0.82rem;
-  color: #444;
-  font-family: 'Courier New', monospace;
-  background: #f9f9f9;
-  resize: vertical;
-  outline: none;
-  width: 100%;
-  box-sizing: border-box;
-  line-height: 1.6;
-}
-
-.robots-textarea:focus {
-  border-color: #1a3a6b;
-}
-
-/* ---- OG Image Card ---- */
-.og-card {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  border: 1px solid rgba(0,0,0,0.04);
-  border-radius: 14px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  transition: box-shadow 0.3s ease;
-}
-
-.og-card:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-}
-
-.og-image-preview {
-  background: #e8eef8;
-  min-height: 200px;
-  display: flex;
-  align-items: center;
   justify-content: center;
+  margin-top: 20px;
 }
 
-.og-avatar-placeholder {
-  width: 140px;
-  height: 140px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.og-avatar-placeholder svg {
+.theme-card {
+  background-color: var(--code-bg); /* Màu nền card tự đổi Duy nhé */
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 40px;
   width: 100%;
-  height: 100%;
-}
-
-.og-info {
-  padding: 32px 36px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  justify-content: center;
-}
-
-.og-label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: #999;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  margin: 0;
-}
-
-.og-description {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: #1a1a2e;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.og-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-/* ===========================
-   BUTTONS
-   =========================== */
-.btn-primary {
-  font-family: 'DM Sans', sans-serif;
-  background: #1a3a6b;
-  color: #fff;
-  border: none;
-  padding: 9px 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.btn-primary:hover {
-  background: #0f2450;
-}
-
-.btn-secondary {
-  font-family: 'DM Sans', sans-serif;
-  background: #fff;
-  color: #1a1a2e;
-  border: 1px solid #ccc;
-  padding: 9px 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
-}
-
-.btn-secondary:hover {
-  background: #f5f5f5;
-  border-color: #999;
-}
-
-/* ===========================
-   SECURITY SECTION
-   =========================== */
-.security-header {
-  display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 24px;
+  gap: 24px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.security-icon {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
+.theme-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 }
 
-.security-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
-.security-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #1a1a2e;
-  margin: 0 0 4px;
-  letter-spacing: -0.1px;
-}
-
-.security-subtitle {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  color: #666;
-  margin: 0;
-  font-weight: 400;
-}
-
-/* Security Items */
-.security-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 20px 24px;
-  border: 1px solid #e8e8e8;
-  border-radius: 8px;
-  background: #fff;
-  margin-bottom: 12px;
-}
-
-.security-item-icon {
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-}
-
-.security-item-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
-.security-item-info {
-  flex: 1;
-}
-
-.security-item-title {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #1a1a2e;
-  margin: 0 0 4px;
-}
-
-.security-item-desc {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.83rem;
-  color: #777;
-  margin: 0;
-  font-weight: 400;
-}
-
-/* 2FA Row */
-.twofa-item {
-  background: #f8f9fc;
-}
-
-.twofa-logo {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1a3a6b;
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  min-width: 140px;
-  border-right: 1px solid #dde2ea;
-  padding-right: 16px;
-  margin-right: 0;
-}
-
-.twofa-icon-dot {
-  font-size: 0.7rem;
-  color: #2196f3;
-}
-
-/* Toggle */
-.toggle-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.toggle-label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #2196f3;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-}
-
+/* ---- Toggle Switch Duy yêu cầu ---- */
 .toggle-switch {
   position: relative;
-  width: 46px;
-  height: 26px;
-  border-radius: 13px;
+  width: 70px;
+  height: 36px;
+  border-radius: 20px;
   border: none;
   cursor: pointer;
-  transition: background 0.25s;
-  padding: 0;
+  transition: background-color 0.4s ease;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
 }
 
+/* Màu khi bật/tắt Duy nhé */
 .toggle-switch.on {
-  background: #2196f3;
+  background-color: var(--accent);
 }
 
 .toggle-switch.off {
-  background: #ccc;
+  background-color: #cbd5e1;
 }
 
 .toggle-knob {
-  position: absolute;
-  top: 3px;
-  width: 20px;
-  height: 20px;
-  background: #fff;
+  width: 28px;
+  height: 28px;
+  background-color: #ffffff;
   border-radius: 50%;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-  transition: left 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
+/* Hiệu ứng trượt nút Duy nhé */
 .toggle-switch.on .toggle-knob {
-  left: 23px;
+  transform: translateX(32px);
 }
 
 .toggle-switch.off .toggle-knob {
-  left: 3px;
+  transform: translateX(0);
 }
 
-/* Security action area */
-.security-item-action {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-}
-
-.security-item-value {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: #555;
-}
-
-.icon-edit-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  opacity: 0.6;
-  transition: opacity 0.2s;
-}
-
-.icon-edit-btn:hover {
-  opacity: 1;
-}
-
-.icon-edit-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
-.btn-outline-sm {
-  font-family: 'DM Sans', sans-serif;
-  background: #fff;
-  color: #1a3a6b;
-  border: 1.5px solid #1a3a6b;
-  padding: 7px 16px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  border-radius: 5px;
-  cursor: pointer;
-  letter-spacing: 0.2px;
-  transition: all 0.2s;
-}
-
-.btn-outline-sm:hover {
-  background: #1a3a6b;
-  color: #fff;
-}
-
-/* ===========================
-   FOOTER ACTIONS
-   =========================== */
-.settings-footer {
-  position: fixed;
-  bottom: 0;
-  left: 220px;
-  right: 0;
-  background: #fff;
-  border-top: 1px solid #e0e0e0;
-  padding: 14px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 100;
-}
-
-.last-updated {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.8rem;
-  color: #999;
-  margin: 0;
-  font-weight: 400;
-}
-
-.footer-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.btn-cancel {
-  font-family: 'DM Sans', sans-serif;
-  background: none;
-  border: 1px solid #ccc;
-  color: #555;
-  padding: 10px 22px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-cancel:hover {
-  border-color: #999;
-  color: #333;
-}
-
-.btn-save {
-  font-family: 'DM Sans', sans-serif;
-  background: #1a3a6b;
-  color: #fff;
-  border: none;
-  padding: 10px 24px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border-radius: 5px;
-  cursor: pointer;
-  letter-spacing: 0.2px;
-  transition: background 0.2s;
-}
-
-.btn-save:hover {
-  background: #0f2450;
-}
-
-.save-message {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  color: #22c55e;
-  font-weight: 500;
-  margin: 0;
-}
-
-/* ===========================
-   MODALS
-   =========================== */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-box {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  max-width: 600px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-header {
-  padding: 24px 28px;
-  border-bottom: 1px solid #e0e0e0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #1a1a2e;
-  margin: 0;
-  letter-spacing: -0.1px;
-}
-
-.modal-close {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: #999;
-  cursor: pointer;
-  padding: 0;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s;
-}
-
-.modal-close:hover {
-  color: #1a1a2e;
-}
-
-.modal-body {
-  padding: 24px 28px;
-  flex: 1;
-}
-
-.modal-footer {
-  padding: 16px 28px;
-  border-top: 1px solid #e0e0e0;
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-}
-
-.btn-close-modal {
-  font-family: 'DM Sans', sans-serif;
-  background: #f5f5f5;
-  color: #555;
-  border: 1px solid #ddd;
-  padding: 10px 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-close-modal:hover {
-  background: #e8e8e8;
-  border-color: #999;
-}
-
-/* ---- Log Table ---- */
-.log-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'DM Sans', sans-serif;
-}
-
-.log-table thead th {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #999;
-  background: #f5f5f5;
-  padding: 12px;
-  text-align: left;
-  border-bottom: 2px solid #e0e0e0;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-}
-
-.log-table tbody td {
-  font-size: 0.85rem;
-  color: #444;
-  padding: 12px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.log-table tbody tr:hover {
-  background: #f9f9f9;
-}
-
-.log-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.ip-cell {
-  font-family: 'Courier New', monospace;
-  font-size: 0.8rem;
-  color: #666;
-}
-
-/* ===========================
-   RESPONSIVE
-   =========================== */
+/* Responsive */
 @media (max-width: 768px) {
   .settings-page {
-    padding: 24px 20px 80px;
+    padding: 40px 15px;
   }
-
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  .seo-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .og-card {
-    grid-template-columns: 1fr;
-  }
-
-  .og-image-preview {
-    min-height: 160px;
-  }
-
-  .settings-footer {
-    left: 68px;
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-end;
-  }
-
-  .twofa-logo {
-    min-width: unset;
+  .settings-title {
+    font-size: 1.8rem;
   }
 }

@@ -1,7 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+// ✅ Đã gỡ facebookProvider để không bị lỗi import Duy nhé
+import { auth, googleProvider } from "../../firebase";
+import { signInWithPopup } from "firebase/auth";
 
 export default function OAuthButtons() {
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const btnStyle = {
     flex: 1,
@@ -27,31 +32,61 @@ export default function OAuthButtons() {
     e.currentTarget.style.transform = enter ? "translateY(-1px)" : "translateY(0)";
   };
 
-  const handleClick = async (provider) => {
-    setLoading(provider);
+  // ✅ Logic đã rút gọn chỉ còn cho Google Duy nhé
+  const handleGoogleLogin = async () => {
+    setLoading(true);
     try {
-      // Thêm logic OAuth thực tế ở đây
-      setTimeout(() => {
-        console.log(`${provider} login`);
-        setLoading(null);
-      }, 1500);
+      // 1. Mở Popup xác thực Google
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      // 2. Gửi thông tin về Backend
+      const res = await fetch("http://localhost:5000/api/auth/social-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullname: user.displayName,
+          email: user.email,
+          avatar: user.photoURL,
+          provider: "google",
+          socialId: user.uid
+        })
+      });
+
+      const data = await res.json();
+      
+      if (res.ok) {
+        // 3. Lưu token và chuyển hướng
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        navigate("/");
+        window.location.reload();
+      } else {
+        alert(data.message || "Lỗi đăng nhập Google Duy ơi!");
+      }
+
     } catch (err) {
-      console.error(err);
-      setLoading(null);
+      console.error("Lỗi OAuth:", err);
+      if (err.code !== "auth/cancelled-popup-request") {
+        alert("Xác thực Google thất bại hoặc bạn đã hủy!");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div style={{ display: "flex", gap: 12, marginBottom: 24 }}>
+      {/* Chỉ giữ lại nút Google và căn giữa nó Duy nhé */}
       <button
         style={btnStyle}
         onMouseEnter={e => handleHover(e, true)}
         onMouseLeave={e => handleHover(e, false)}
-        onClick={() => handleClick("google")}
-        disabled={loading !== null}
+        onClick={handleGoogleLogin}
+        disabled={loading}
         title="Đăng nhập với Google"
       >
-        {loading === "google" ? (
+        {loading ? (
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: "spin .8s linear infinite" }}>
             <circle cx="12" cy="12" r="10" style={{opacity: 0.3}}/>
             <path d="M12 2a10 10 0 0 1 10 10"/>
@@ -64,28 +99,7 @@ export default function OAuthButtons() {
             <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.3-2.4 4.3-4.4 5.7l6.5 5.5C41.9 36.1 44 30.4 44 24c0-1.3-.1-2.6-.4-3.9z"/>
           </svg>
         )}
-        {loading === "google" ? "..." : "Google"}
-      </button>
-
-      <button
-        style={btnStyle}
-        onMouseEnter={e => handleHover(e, true)}
-        onMouseLeave={e => handleHover(e, false)}
-        onClick={() => handleClick("facebook")}
-        disabled={loading !== null}
-        title="Đăng nhập với Facebook"
-      >
-        {loading === "facebook" ? (
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: "spin .8s linear infinite" }}>
-            <circle cx="12" cy="12" r="10" style={{opacity: 0.3}}/>
-            <path d="M12 2a10 10 0 0 1 10 10"/>
-          </svg>
-        ) : (
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2">
-            <path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.27h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/>
-          </svg>
-        )}
-        {loading === "facebook" ? "..." : "Facebook"}
+        {loading ? "Đang xác minh..." : "Đăng nhập với Google"}
       </button>
 
       <style>{`

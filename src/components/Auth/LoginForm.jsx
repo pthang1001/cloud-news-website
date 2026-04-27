@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { login } from "../../services/authService";
+import { useNavigate } from "react-router-dom"; // Thêm điều hướng bạn nhé
 
 export default function LoginForm({ onSuccess }) {
   const [form, setForm] = useState({ email: "", password: "", remember: false });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [focused, setFocused] = useState({});
+  const navigate = useNavigate();
 
   const inputStyle = (focused, hasError) => ({
     width: "100%",
@@ -21,8 +24,6 @@ export default function LoginForm({ onSuccess }) {
     transition: "border-color .18s, box-shadow .18s",
     boxShadow: focused ? (hasError ? "0 0 0 3px rgba(239,68,68,0.1)" : "0 0 0 3px rgba(37,99,235,0.1)") : "none",
   });
-
-  const [focused, setFocused] = useState({});
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -43,8 +44,17 @@ export default function LoginForm({ onSuccess }) {
     setLoading(true);
     try {
       const data = await login(form.email, form.password);
+      
+      // LƯU THÔNG TIN THỰC TẾ: Để Profile và Navbar hiện đúng tên bạn ơi
       localStorage.setItem("token", data.token);
+      if (data.user) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+      }
+
+      // Thông báo thành công và chuyển hướng
       onSuccess?.(data);
+      navigate("/");
+      window.location.reload(); // Làm mới để Navbar cập nhật tên thật ngay lập tức
     } catch (err) {
       setError(err.message || "Đăng nhập thất bại. Vui lòng thử lại.");
     } finally {
@@ -84,6 +94,10 @@ export default function LoginForm({ onSuccess }) {
           <a href="/forgot-password" style={{ fontSize: 12, color: "#2563eb", textDecoration: "none", fontWeight: 500, transition: "color .2s" }} onMouseEnter={e => e.target.style.color = "#1d4ed8"} onMouseLeave={e => e.target.style.color = "#2563eb"}>Quên mật khẩu?</a>
         </div>
         <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+          {/* CSS ẩn icon mặc định của trình duyệt để không bị "hai con mắt" bạn nhé */}
+          <style>{`
+            input::-ms-reveal, input::-ms-clear { display: none; }
+          `}</style>
           <input
             type={showPassword ? "text" : "password"}
             name="password" 
@@ -191,6 +205,13 @@ export default function LoginForm({ onSuccess }) {
         )}
         {loading ? "Đang đăng nhập..." : "Đăng nhập"}
       </button>
+
+      <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }

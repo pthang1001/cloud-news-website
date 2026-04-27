@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./ChangePasswordModal.css";
 
 const getStrength = (password) => {
@@ -42,6 +42,15 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [userEmail, setUserEmail] = useState(""); // Lưu email người dùng Duy nhé
+
+  useEffect(() => {
+    // Lấy email người dùng từ localStorage khi mở Modal
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUserEmail(JSON.parse(savedUser).email);
+    }
+  }, [isOpen]);
 
   const strength = getStrength(newPw);
 
@@ -55,18 +64,43 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
     return errs;
   };
 
+  // FIX: HÀM CẬP NHẬT MẬT KHẨU THỰC TẾ GỬI LÊN BACKEND Duy nhé
   const handleSubmit = async () => {
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+    
     setErrors({});
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    setSuccess(true);
-    setTimeout(() => {
-      setSuccess(false);
-      handleClose();
-    }, 1800);
+
+    try {
+      // Gửi yêu cầu đổi mật khẩu lên cổng 5000 Duy nhé
+      const response = await fetch("http://localhost:5000/api/auth/change-password", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: userEmail,
+          oldPassword: currentPw,
+          newPassword: newPw
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+          handleClose();
+        }, 1800);
+      } else {
+        // Nếu mật khẩu cũ sai, Backend sẽ báo và hiện lỗi ở đây Duy nhé
+        setErrors({ currentPw: data.message || "Đã có lỗi xảy ra." });
+      }
+    } catch (err) {
+      setErrors({ currentPw: "Không thể kết nối máy chủ. Hãy chạy server.js Duy nhé!" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClose = () => {
@@ -80,6 +114,11 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
   return (
     <div className="cpw-overlay" onClick={handleClose}>
       <div className="cpw-modal" onClick={(e) => e.stopPropagation()}>
+        {/* FIX: CSS ẨN CON MẮT DƯ THỪA TRÊN TRÌNH DUYỆT Duy nhé */}
+        <style>{`
+          input::-ms-reveal, input::-ms-clear { display: none; }
+        `}</style>
+
         {/* HEADER */}
         <div className="cpw-header">
           <div>

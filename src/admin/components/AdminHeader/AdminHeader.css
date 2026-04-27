@@ -1,16 +1,23 @@
+/* ============================================================
+   AdminHeader.css — Fixed, Borderless & Notification Bell
+   ============================================================ */
+
 .admin-header {
-  height: var(--admin-header-height);
-  background: var(--admin-navy-mid);
-  border-bottom: 1px solid var(--admin-border);
+  height: var(--admin-header-height, 64px);
+  background: var(--bg); 
+  border: none !important; 
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   padding: 0 32px;
   gap: 20px;
   position: fixed;
   top: 0;
-  left: 220px;
+  left: 220px; 
   right: 0;
-  z-index: 50;
+  z-index: 1000; 
+  overflow: hidden;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .header-left {
@@ -29,47 +36,6 @@
   opacity: 0.8;
 }
 
-.header-center {
-  flex: 1;
-  max-width: 420px;
-}
-
-.header-search {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--admin-navy-light);
-  border: 1px solid var(--admin-border);
-  border-radius: 8px;
-  padding: 8px 14px;
-  transition: border-color var(--admin-transition);
-}
-
-.header-search:focus-within {
-  border-color: rgba(37, 99, 235, 0.5);
-}
-
-.header-search svg {
-  width: 16px;
-  height: 16px;
-  color: var(--admin-text-dim);
-  flex-shrink: 0;
-}
-
-.header-search input {
-  background: none;
-  border: none;
-  outline: none;
-  color: var(--admin-text);
-  font-size: 13.5px;
-  font-family: var(--font-sans);
-  width: 100%;
-}
-
-.header-search input::placeholder {
-  color: var(--admin-text-dim);
-}
-
 .header-right {
   margin-left: auto;
   display: flex;
@@ -77,51 +43,96 @@
   gap: 12px;
 }
 
+/* 🔔 CHUÔNG THÔNG BÁO - Duy mới thêm ở đây nhé */
+.notification-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--code-bg);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 4px;
+}
+
+.notification-wrapper:hover {
+  background: var(--border);
+  color: var(--text-h);
+  transform: translateY(-1px);
+}
+
+.bell-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Chấm đỏ nhảy số thông báo Duy nhé */
+.notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg); /* Viền bao quanh để nổi bật trên nền */
+  padding: 0 4px;
+}
+
+/* Style cho các nút chức năng Duy nhé */
 .header-action-btn,
 .header-logout-btn {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--admin-text-muted);
+  border: none !important;
+  border-radius: 10px;
+  background: var(--code-bg);
+  color: var(--text);
   cursor: pointer;
-  font-family: var(--font-sans);
+  font-family: var(--sans);
   font-size: 13px;
-  font-weight: 500;
-  transition: all var(--admin-transition);
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
-.header-action-btn:hover,
-.header-logout-btn:hover {
-  background: rgba(0,0,0,0.06);
-  color: var(--admin-text);
-}
-
-.header-action-btn:active,
-.header-logout-btn:active {
-  background: rgba(0,0,0,0.12);
-}
-
-.header-action-btn svg,
-.header-logout-btn svg {
-  width: 16px;
-  height: 16px;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.header-action-btn:hover {
+  background: var(--border);
+  color: var(--text-h);
+  transform: translateY(-1px);
 }
 
 .header-logout-btn {
+  background: rgba(239, 68, 68, 0.08);
   color: #ef4444;
 }
 
 .header-logout-btn:hover {
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.15);
   color: #dc2626;
+  transform: translateY(-1px);
 }
 
-.header-logout-btn:active {
-  background: rgba(239, 68, 68, 0.15);
+.header-action-btn svg,
+.header-logout-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Chặn hiệu ứng kéo trên cảm ứng Duy nhé */
+@media (hover: none) {
+  .admin-header {
+    touch-action: none;
+  }
 }

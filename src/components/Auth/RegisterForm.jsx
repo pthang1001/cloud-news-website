@@ -1,20 +1,23 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { register } from "../../services/authService";
+import { useNavigate } from "react-router-dom";
 
-function Field({ name, label, type = "text", placeholder, value, onChange, onFocus, onBlur, disabled, style }) {
+function Field({ name, label, type = "text", placeholder, inputRef, value, onChange, onFocus, onBlur, style }) {
   return (
-    <div>
+    <div style={{ marginBottom: 16 }}>
       <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 6 }}>{label}</label>
       <input
         type={type} 
         name={name} 
+        ref={inputRef}
         value={value}
         placeholder={placeholder}
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
-        disabled={disabled}
-        style={style}
+        spellCheck="false"
+        autoComplete="off"
+        style={{ ...style, textTransform: "none" }}
       />
     </div>
   );
@@ -22,9 +25,10 @@ function Field({ name, label, type = "text", placeholder, value, onChange, onFoc
 
 function PasswordField({ name, label, placeholder, value, onChange, onFocus, onBlur, disabled, style, showPassword, onToggle }) {
   return (
-    <div>
+    <div style={{ marginBottom: 16 }}>
       <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 6 }}>{label}</label>
       <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+        <style>{`input::-ms-reveal, input::-ms-clear { display: none; }`}</style>
         <input
           type={showPassword ? "text" : "password"}
           name={name}
@@ -34,36 +38,17 @@ function PasswordField({ name, label, placeholder, value, onChange, onFocus, onB
           onFocus={onFocus}
           onBlur={onBlur}
           disabled={disabled}
-          style={{...style, paddingRight: "40px"}}
+          style={{...style, paddingRight: "40px", textTransform: "none"}}
         />
         <button
           type="button"
           onClick={onToggle}
-          disabled={disabled}
-          style={{
-            position: "absolute",
-            right: 12,
-            background: "none",
-            border: "none",
-            cursor: disabled ? "not-allowed" : "pointer",
-            color: "#94a3b8",
-            padding: "4px 8px",
-            transition: "color .2s",
-          }}
-          onMouseEnter={e => { if (!disabled) e.target.style.color = "#64748b"; }}
-          onMouseLeave={e => { e.target.style.color = "#94a3b8"; }}
+          style={{ position: "absolute", right: 12, background: "none", border: "none", cursor: "pointer", color: "#94a3b8" }}
         >
           {showPassword ? (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-              <line x1="1" y1="1" x2="23" y2="23" strokeWidth="2"/>
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           ) : (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           )}
         </button>
       </div>
@@ -72,12 +57,20 @@ function PasswordField({ name, label, placeholder, value, onChange, onFocus, onB
 }
 
 export default function RegisterForm({ onSuccess }) {
-  const [form, setForm] = useState({ fullname: "", email: "", password: "", confirmPassword: "", agree: false });
+  const [form, setForm] = useState({ email: "", password: "", confirmPassword: "" });
+  const fullnameRef = useRef(null); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [focused, setFocused] = useState({});
+  const [fieldErrors, setFieldErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const normalizeName = (name) => {
+    if (!name) return "";
+    return name.trim().toLowerCase().split(' ').filter(w => w !== "").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  };
 
   const inputStyle = (name, hasError) => ({
     width: "100%",
@@ -94,209 +87,91 @@ export default function RegisterForm({ onSuccess }) {
     boxShadow: focused[name] ? (hasError ? "0 0 0 3px rgba(239,68,68,0.1)" : "0 0 0 3px rgba(37,99,235,0.1)") : "none",
   });
 
-  const handleFieldChange = (name) => (e) => {
-    setForm(f => ({ ...f, [name]: e.target.value }));
-    if (error) setError("");
-  };
-
-  const handleFieldFocus = (name) => () => {
-    setFocused(f => ({ ...f, [name]: true }));
-  };
-
-  const handleFieldBlur = (name) => () => {
-    setFocused(f => ({ ...f, [name]: false }));
-  };
-
   const handleSubmit = async () => {
+    // FIX: Loại bỏ khoảng trắng ở 2 đầu để không bị lỗi Regex Duy nhé
+    const rawFullname = fullnameRef.current.value.trim();
+    const rawEmail = form.email.trim();
+    const rawPassword = form.password.trim();
+    const rawConfirm = form.confirmPassword.trim();
+
     setError("");
-    if (!form.fullname || !form.email || !form.password || !form.confirmPassword) {
-      setError("Vui lòng điền đầy đủ thông tin.");
+    const errors = {};
+    
+    // Regex email linh hoạt hơn cho Duy nhé
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+    // Mật khẩu: Ít nhất 6 ký tự, có 1 chữ HOA và 1 ký tự đặc biệt
+    const passRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{6,})/;
+
+    if (!rawFullname) errors.fullname = true;
+    if (!emailRegex.test(rawEmail)) errors.email = true;
+    if (!passRegex.test(rawPassword)) errors.password = true;
+    if (rawPassword !== rawConfirm) errors.confirmPassword = true;
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setError("Thông tin nhập chưa đúng (Email cần đúng định dạng, Mật khẩu cần chữ HOA và ký tự đặc biệt) Duy nhé!");
       return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      setError("Email không hợp lệ.");
-      return;
-    }
-    if (form.password.length < 6) {
-      setError("Mật khẩu phải có ít nhất 6 ký tự.");
-      return;
-    }
-    if (form.password !== form.confirmPassword) {
-      setError("Mật khẩu xác nhận không khớp.");
-      return;
-    }
-    if (!form.agree) {
-      setError("Vui lòng đồng ý với điều khoản sử dụng.");
-      return;
-    }
+
     setLoading(true);
     try {
-      const data = await register(form.fullname, form.email, form.password);
+      const finalName = normalizeName(rawFullname);
+      const data = await register(finalName, rawEmail, rawPassword);
+      
+      const now = new Date();
+      const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+
       localStorage.setItem("token", data.token);
-      onSuccess?.(data);
+      localStorage.setItem("user", JSON.stringify({
+        fullname: finalName,
+        email: rawEmail,
+        joinDate: formattedDate 
+      }));
+
+      if (onSuccess) onSuccess(data);
+      navigate("/");
+      window.location.reload(); 
     } catch (err) {
-      setError(err.message || "Đăng ký thất bại. Vui lòng thử lại.");
+      setError(err.message || "Đăng ký thất bại.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !loading) {
-      handleSubmit();
-    }
-  };
-
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      {/* Register Header Info */}
-      <div style={{ 
-        background: "#f0f9ff", 
-        border: "1px solid #bfdbfe",
-        borderRadius: 10,
-        padding: "12px 14px",
-        fontSize: 13,
-        color: "#1e40af",
-        display: "flex",
-        alignItems: "flex-start",
-        gap: 8,
-      }}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ flexShrink: 0, marginTop: 2 }}>
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="12" y1="16" x2="12" y2="12"/>
-          <line x1="12" y1="8" x2="12.01" y2="8"/>
-        </svg>
-        <span style={{ fontWeight: 500, lineHeight: 1.4 }}>Mật khẩu phải có ít nhất 6 ký tự với chữ, số và ký tự đặc biệt</span>
-      </div>
-
+    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <h2 style={{ fontSize: 20, fontWeight: 700, textAlign: "center", margin: "10px 0" }}>Tham gia cộng đồng độc giả Diễn Đàn Press</h2>
+      
       <Field 
         name="fullname" 
         label="Họ và tên" 
-        placeholder="Nguyễn Văn A"
-        value={form.fullname}
-        onChange={handleFieldChange("fullname")}
-        onFocus={handleFieldFocus("fullname")}
-        onBlur={handleFieldBlur("fullname")}
-        disabled={loading}
-        style={inputStyle("fullname", false)}
+        placeholder="Nguyễn Văn A" 
+        inputRef={fullnameRef} 
+        onFocus={() => setFocused(f => ({ ...f, fullname: true }))} 
+        onBlur={() => setFocused(f => ({ ...f, fullname: false }))} 
+        style={inputStyle("fullname", fieldErrors.fullname)} 
       />
+
       <Field 
         name="email" 
         label="Email" 
         type="email" 
-        placeholder="example@press.vn"
-        value={form.email}
-        onChange={handleFieldChange("email")}
-        onFocus={handleFieldFocus("email")}
-        onBlur={handleFieldBlur("email")}
-        disabled={loading}
-        style={inputStyle("email", false)}
-      />
-      <PasswordField 
-        name="password" 
-        label="Mật khẩu" 
-        placeholder="••••••••"
-        value={form.password}
-        onChange={handleFieldChange("password")}
-        onFocus={handleFieldFocus("password")}
-        onBlur={handleFieldBlur("password")}
-        disabled={loading}
-        style={inputStyle("password", false)}
-        showPassword={showPassword}
-        onToggle={() => setShowPassword(!showPassword)}
-      />
-      <PasswordField 
-        name="confirmPassword" 
-        label="Xác nhận mật khẩu" 
-        placeholder="••••••••"
-        value={form.confirmPassword}
-        onChange={handleFieldChange("confirmPassword")}
-        onFocus={handleFieldFocus("confirmPassword")}
-        onBlur={handleFieldBlur("confirmPassword")}
-        disabled={loading}
-        style={inputStyle("confirmPassword", false)}
-        showPassword={showConfirmPassword}
-        onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
+        placeholder="example@press.vn" 
+        value={form.email} 
+        onChange={(e) => setForm({...form, email: e.target.value})} 
+        onFocus={() => setFocused(f => ({ ...f, email: true }))} 
+        onBlur={() => setFocused(f => ({ ...f, email: false }))} 
+        style={inputStyle("email", fieldErrors.email)} 
       />
 
-      <label style={{ 
-        display: "flex", 
-        alignItems: "flex-start", 
-        gap: 10, 
-        fontSize: 14, 
-        color: "#374151", 
-        cursor: loading ? "not-allowed" : "pointer", 
-        opacity: loading ? 0.6 : 1,
-        padding: "4px 0",
-      }}>
-        <input 
-          type="checkbox" 
-          checked={form.agree}
-          onChange={e => setForm(f => ({ ...f, agree: e.target.checked }))}
-          disabled={loading}
-          style={{ width: 16, height: 16, accentColor: "#2563eb", marginTop: 2, flexShrink: 0, cursor: loading ? "not-allowed" : "pointer" }} 
-        />
-        <span style={{ fontWeight: 500, lineHeight: 1.5 }}>
-          Tôi đồng ý với{" "}
-          <a href="/terms" style={{ color: "#2563eb", textDecoration: "none", fontWeight: 700, transition: "color .2s" }} onMouseEnter={e => e.target.style.color = "#1d4ed8"} onMouseLeave={e => e.target.style.color = "#2563eb"}>Điều khoản sử dụng</a>{" "}
-          và{" "}
-          <a href="/privacy" style={{ color: "#2563eb", textDecoration: "none", fontWeight: 700, transition: "color .2s" }} onMouseEnter={e => e.target.style.color = "#1d4ed8"} onMouseLeave={e => e.target.style.color = "#2563eb"}>Chính sách bảo mật</a>
-        </span>
-      </label>
+      <PasswordField name="password" label="Mật khẩu" placeholder="••••••••" value={form.password} onChange={(e) => setForm({...form, password: e.target.value})} onFocus={() => setFocused(f => ({ ...f, password: true }))} onBlur={() => setFocused(f => ({ ...f, password: false }))} style={inputStyle("password", fieldErrors.password)} showPassword={showPassword} onToggle={() => setShowPassword(!showPassword)} />
+      <PasswordField name="confirmPassword" label="Xác nhận mật khẩu" placeholder="••••••••" value={form.confirmPassword} onChange={(e) => setForm({...form, confirmPassword: e.target.value})} onFocus={() => setFocused(f => ({ ...f, confirmPassword: true }))} onBlur={() => setFocused(f => ({ ...f, confirmPassword: false }))} style={inputStyle("confirmPassword", fieldErrors.confirmPassword)} showPassword={showConfirmPassword} onToggle={() => setShowConfirmPassword(!showConfirmPassword)} />
 
-      {error && (
-        <div style={{ fontSize: 13, color: "#dc2626", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 10, padding: "14px 14px", display: "flex", alignItems: "flex-start", gap: 10 }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ flexShrink: 0, marginTop: 1 }}>
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-          <span style={{ fontWeight: 500, lineHeight: 1.4 }}>{error}</span>
-        </div>
-      )}
+      {error && <div style={{ fontSize: 13, color: "#dc2626", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 10, padding: "12px", textAlign: "center" }}>{error}</div>}
 
-      <button
-        onClick={handleSubmit}
-        onKeyPress={handleKeyPress}
-        disabled={loading}
-        style={{
-          width: "100%", 
-          padding: "14px 16px",
-          background: loading ? "#bfdbfe" : "linear-gradient(135deg, #2563eb, #1d4ed8)",
-          color: "#fff", 
-          border: "none", 
-          borderRadius: 10,
-          fontSize: 15, 
-          fontWeight: 700, 
-          cursor: loading ? "not-allowed" : "pointer",
-          fontFamily: "'Be Vietnam Pro', sans-serif",
-          transition: "all .2s ease",
-          boxShadow: loading ? "0 2px 8px rgba(37,99,235,0.2)" : "0 4px 15px rgba(37,99,235,0.35)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 8,
-          marginTop: 4,
-          letterSpacing: "0.3px",
-        }}
-        onMouseEnter={e => { if (!loading) { e.target.style.transform = "translateY(-2px)"; e.target.style.boxShadow = "0 6px 20px rgba(37,99,235,0.4)"; } }}
-        onMouseLeave={e => { e.target.style.transform = "translateY(0)"; e.target.style.boxShadow = "0 4px 15px rgba(37,99,235,0.35)"; }}
-      >
-        {loading && (
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: "spin .8s linear infinite" }}>
-            <circle cx="12" cy="12" r="10" style={{opacity: 0.3}}/>
-            <path d="M12 2a10 10 0 0 1 10 10"/>
-          </svg>
-        )}
-        {loading ? "Đang đăng ký..." : "Tạo tài khoản"}
+      <button onClick={handleSubmit} disabled={loading} style={{ width: "100%", padding: "14px", background: loading ? "#bfdbfe" : "linear-gradient(135deg, #2563eb, #1d4ed8)", color: "#fff", border: "none", borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: loading ? "not-allowed" : "pointer", marginTop: 8 }}>
+        {loading ? "Đang xử lý..." : "Tạo tài khoản"}
       </button>
-
-      <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
     </div>
   );
 }

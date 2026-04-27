@@ -1,116 +1,122 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* Gom tất cả font vào một chỗ cho sạch Duy nhé */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
 :root {
+  /* Bảng màu Sáng cố định Duy nhé */
   --text: #6b6375;
   --text-h: #08060d;
-  --bg: #fff;
+  --bg: #ffffff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
   --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --shadow: rgba(0, 0, 0, 0.05) 0 4px 20px -2px;
+  --icon-filter: none;
 
   --sans: 'DM Sans', system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: 'Playfair Display', system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Chiều cao Header cố định */
+  --header-height: 70px; 
 }
 
-/* Light theme only */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #6b6375;
-    --text-h: #08060d;
-    --bg: #fff;
-    --border: #e5e4e7;
-    --code-bg: #f4f3ec;
-    --accent: #aa3bff;
-    --accent-bg: rgba(170, 59, 255, 0.1);
-    --accent-border: rgba(170, 59, 255, 0.5);
-    --social-bg: rgba(244, 243, 236, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-  }
+/* ✅ Đã xóa bỏ hoàn toàn block [data-theme='dark'] */
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+/* 🎯 RESET TOÀN CỤC & CHẶN OVERSCROLL */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   box-sizing: border-box;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
+html, body {
   margin: 0;
+  padding: 0;
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+  font-family: var(--sans);
+  /* Chống hiệu ứng kéo "bóng ma" lò xo Duy nhé */
+  overscroll-behavior-y: none; 
+  height: 100%;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg) !important;
+  border: none !important;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* 🚀 BỐ CỤC ADMIN PHẲNG & GỌN GÀNG */
+main {
+  padding-top: calc(var(--header-height) + 32px) !important; 
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-bottom: 60px;
+  background-color: transparent !important;
+  max-width: 1200px; 
+  margin: 0 auto;
+  width: 100%;
+  flex: 1;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+/* Các thẻ container con Duy cần giới hạn chặt chẽ */
+/* ✅ Đã xóa .settings-page khỏi danh sách Duy nhé */
+.profile-page, 
+.history-page, 
+.admin-content, 
+.management-page {
+  background-color: transparent !important;
+  border: none !important;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto !important;
+}
+
+/* 🚀 CỐ ĐỊNH HEADER: Chặn nội dung lấn chiếm phía trên */
+header, .admin-header {
+  position: fixed !important;
+  top: 0;
+  left: 220px; 
+  right: 0;
+  height: var(--header-height);
+  z-index: 1000 !important;
+  background-color: var(--bg) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+  border: none !important;
+}
+
+/* Các Card nội dung: Không viền, chỉ dùng Shadow cho sang Duy nhé */
+.section-card, .table-container, .card, .stat-card {
+  background-color: var(--code-bg) !important;
+  border: none !important;
+  border-radius: 20px;
+  box-shadow: var(--shadow) !important;
+  margin-bottom: 24px;
+  overflow: hidden; 
+}
+
+/* Table mướt mắt */
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  :root { font-size: 16px; }
+  h1 { font-size: 36px; }
+  main { padding-left: 16px; padding-right: 16px; }
+}

@@ -1,0 +1,40 @@
+/* ContentManagePage.css */
+
+/* Reset lại font cho giống trang Users Duy nhé */
+.users-page__title {
+    font-family: 'Inter', sans-serif !important; /* Đảm bảo không bị nhảy sang font có chân */
+    font-size: 28px !important;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.violation-text {
+    color: #dc2626;
+    font-style: italic;
+    font-size: 14px;
+    max-width: 350px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.report-time {
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* Tận dụng lại các class từ UsersPage.css Duy đã có */
+/* Nếu trang Users có style cho .stat-card và .users-table thì nó sẽ tự ăn theo Duy nhé */
+
+.action-btn--delete:hover {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+/* Đảm bảo bảng không bị tràn và canh lề chuẩn Duy nhé */
+.users-table-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    margin-top: 24px;
+    overflow: hidden;
+}

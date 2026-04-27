@@ -121,7 +121,7 @@ export default function AuthPage({ mode = "login" }) {
         {isRegister ? <RegisterPage /> : <LoginPage />}
 
         <div style={{ position: "absolute", bottom: 20, fontSize: 12, color: "#94a3b8", textAlign: "center" }}>
-          © 2024 Diễn Đàn Press · Editorial Precision System
+          © 2026 Diễn Đàn Press · Editorial Precision System
         </div>
       </div>
     </div>

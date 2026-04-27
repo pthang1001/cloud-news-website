@@ -66,7 +66,7 @@ export default function LoginPage() {
         </div>
         <div>
           <div style={{ fontSize: 13, fontWeight: 700, color: "#1e293b", lineHeight: 1.4 }}>Bảo mật tuyệt đối</div>
-          <div style={{ fontSize: 12, color: "#94a3b8", lineHeight: 1.4 }}>Dữ liệu được mã hóa theo tiêu chuẩn ngân hàng</div>
+          
         </div>
       </div>
     </div>

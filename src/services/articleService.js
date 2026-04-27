@@ -2,23 +2,31 @@
 import api from "./api";
 
 /**
- * Lấy danh sách tất cả bài viết
- * @param {number} page
- * @param {number} limit
- * @param {string} sort
- * @returns {Promise<Array>}
+ * Lấy danh sách bài viết (Đã cập nhật thêm Tìm kiếm và Chuyên mục)
  */
-export const getAllArticles = async (page = 1, limit = 100, sort = "-created_at") => {
+export const getAllArticles = async (category = "Tất cả", search = "", page = 1, limit = 100) => {
   const res = await api.get("/articles", {
-    params: { page, limit, sort },
+    params: { 
+        category: category, 
+        q: search,
+        page, 
+        limit 
+    },
   });
   return Array.isArray(res.data) ? res.data : res.data.articles || [];
 };
 
 /**
- * Lấy chi tiết bài viết theo ID
- * @param {string|number} id
- * @returns {Promise<Object>}
+ * 🚀 TÍNH NĂNG MỚI: Lấy danh sách tin nổi bật cho Hero & Sidebar
+ * Duy cần hàm này để Home.jsx không bị lỗi trắng trang nhé!
+ */
+export const getTopArticles = async () => {
+  const res = await api.get("/top-articles");
+  return res.data;
+};
+
+/**
+ * Lấy chi tiết bài viết theo ID (ID bây giờ là mã Hex Duy nhé)
  */
 export const getArticleById = async (id) => {
   const res = await api.get(`/articles/${id}`);
@@ -27,9 +35,6 @@ export const getArticleById = async (id) => {
 
 /**
  * Lấy danh sách bài viết liên quan
- * @param {string|number} articleId
- * @param {number} limit
- * @returns {Promise<Array>}
  */
 export const getRelatedArticles = async (articleId, limit = 3) => {
   const res = await api.get(`/articles/${articleId}/related`, {
@@ -39,9 +44,7 @@ export const getRelatedArticles = async (articleId, limit = 3) => {
 };
 
 /**
- * Lấy danh sách bình luận của bài viết
- * @param {string|number} articleId
- * @returns {Promise<Array>}
+ * Lấy danh sách bình luận
  */
 export const getComments = async (articleId) => {
   const res = await api.get(`/articles/${articleId}/comments`);
@@ -50,9 +53,6 @@ export const getComments = async (articleId) => {
 
 /**
  * Gửi bình luận mới
- * @param {string|number} articleId
- * @param {string} text
- * @returns {Promise<Object>}
  */
 export const postComment = async (articleId, text) => {
   const res = await api.post(`/articles/${articleId}/comments`, { text });
@@ -61,8 +61,6 @@ export const postComment = async (articleId, text) => {
 
 /**
  * Thích / bỏ thích bình luận
- * @param {string|number} commentId
- * @returns {Promise<Object>}
  */
 export const toggleLikeComment = async (commentId) => {
   const res = await api.post(`/comments/${commentId}/like`);
